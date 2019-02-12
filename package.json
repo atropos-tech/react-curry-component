@@ -1,0 +1,54 @@
+{
+  "name": "react-curry-component",
+  "version": "0.1.0",
+  "description": "A react utility allowing easy creation of specialised components from existing components",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --watch --no-cache --runInBand --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atropos-tech/react-curry-component.git"
+  },
+  "keywords": [
+    "react",
+    "reactjs",
+    "curry"
+  ],
+  "author": "Duncan Thacker (duncan.thacker@atropos.co.uk)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/atropos-tech/react-curry-component/issues"
+  },
+  "homepage": "https://github.com/atropos-tech/react-curry-component#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/runtime": "^7.3.1",
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.9.1",
+    "eslint": "^5.13.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jest": "^22.2.2",
+    "eslint-plugin-react": "^7.12.4",
+    "jest": "^24.1.0",
+    "react": "^16.8.1"
+  },
+  "peerDependencies": {
+    "react": ">= 15"
+  },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "jest-enzyme"
+    ],
+    "testEnvironment": "enzyme",
+    "testEnvironmentOptions": {
+      "enzymeAdapter": "react16"
+    },
+    "collectCoverageFrom": [
+      "**/*.js"
+    ]
+  }
+}
