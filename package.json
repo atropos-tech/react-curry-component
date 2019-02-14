@@ -56,7 +56,7 @@
       "enzymeAdapter": "react16"
     },
     "collectCoverageFrom": [
-      "**/*.js"
+      "src/**/*.js"
     ]
   },
   "dependencies": {
