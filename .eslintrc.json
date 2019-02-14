@@ -10,8 +10,8 @@
             "jsx": true
         }
     },
-    "plugins": ["jest", "import", "react", "promise"],
-    "extends": ["plugin:jest/recommended", "plugin:promise/recommended", "plugin:react/recommended", "eslint:recommended"],
+    "plugins": ["jest", "import", "react"],
+    "extends": ["plugin:jest/recommended", "plugin:react/recommended", "eslint:recommended"],
     "settings": {
         "react": {
             "version": "detect"

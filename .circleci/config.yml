@@ -1,0 +1,18 @@
+version: 2
+jobs:  
+  build:
+    docker:
+      - image: circleci/node:11.9.0
+    steps:      
+      - checkout
+      - run: npm install
+      - run: npm run lint
+      - run:
+          name: Run jest tests with JUnit as reporter
+          command: npm run test-ci
+          environment:
+            JEST_JUNIT_OUTPUT: "reports/junit/js-test-results.xml"
+      - store_test_results:
+          path: reports
+      - store_artifacts:
+          path: coverage
