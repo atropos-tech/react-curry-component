@@ -1,3 +1,6 @@
+# 1.1.0 released 15/02/2019
+ * Curried components have the same proptypes as their underlying component
+
 # 1.0.0 released 15/02/2019
  * Add Smart Curry
 

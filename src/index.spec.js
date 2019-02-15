@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-magic-numbers */
-/* eslint-disable class-methods-use-this */
 
 import React, { Component } from "react";
 import { curry, curryHard, currySoft, currySmart } from "./index";
 import { mount } from "enzyme";
+import { string } from "prop-types";
 
 function SomeFunctionComponent() {
     return <span />;
@@ -12,9 +12,13 @@ function SomeFunctionComponent() {
 
 class SomeClassComponent extends Component {
     render() {
-        return <span></span>;
+        return <span>{ this.props.someProps }</span>;
     }
 }
+
+SomeClassComponent.propTypes = {
+    someProps: string
+};
 
 describe("curry package", () => {
 
@@ -149,6 +153,13 @@ describe("curry package", () => {
         const CurriedComponent = currySoft(<div className="some-class" />, "ClassyDiv");
         const wrapper = mount(<CurriedComponent />);
         expect(wrapper).toHaveDisplayName("ClassyDiv");
+    });
+
+    it("gives same propTypes to curried component", () => {
+        expect.assertions(1);
+
+        const CurriedComponent = curry(<SomeClassComponent className="some-class" />);
+        expect(CurriedComponent.propTypes).toEqual(SomeClassComponent.propTypes);
     });
 
 });

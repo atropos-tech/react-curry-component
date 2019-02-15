@@ -9,6 +9,7 @@ export function curry(reactElement, displayName, propsReducer = allowOverwrite) 
         return <CurriedType { ...combinedProps } />;
     };
     curriedComponent.displayName = displayName || `Curried(${ getDisplayName(CurriedType) })`;
+    curriedComponent.propTypes = CurriedType.propTypes;
     return curriedComponent;
 }
 
