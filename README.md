@@ -89,22 +89,57 @@ const buttonElement1 = <AlwaysRaisedButton variant="outlined" />; // variant wil
 
 The default export for this package is `currySoft`.
 
+## Smart currying
+For some React props, it makes more sense to do some sort of clever merge rather than just use either prop. For example, with `className` or `style`, it makes more sense to use both the curried value and the supplied value. You can use `currySmart` to do this:
+
+```jsx
+import React from 'react';
+import { currySmart } from 'react-curry-component';
+
+const MyButton = currySmart(<button className="btn" />);
+const buttonElement = <MyButton className="submit-btn" />; // className will be "btn submit-btn"
+
+const MyTitle = currySmart(<h2 style={ { fontFamily: "Comic Sans" } } />);
+const titleElement = <MyTitle style={ { padding: "8px" } }>Hurray for Curry!</MyTitle>; //will have the font family and the padding applied
+```
+
+In the case of event handlers, `currySmart` will ensure that both handlers are triggered:
+
+```jsx
+import React from 'react';
+import { currySmart } from 'react-curry-component';
+
+const MyButton = currySmart(<button onClick={ sendButtonAnalytics } />);
+const buttonElement = <MyButton onClick={ handleSubmit } />; // clicking on this will trigger analytics and submit behaviour
+```
+
+All other props will be handled using the normal `currySoft` behaviour. You can switch to `curryHard` default behaviour like this:
+
+```jsx
+import React from 'react';
+import { currySmart } from 'react-curry-component';
+
+const MyButton = currySmart(<button onClick={ sendButtonAnalytics } />, true); // will prefer curried props
+```
+
+This also gives preference to curried style instructions if they conflict with the "normal" props.
+
 ## Custom prop behaviour
-In some specialised circumstances you may want to customised the currying behaviour for certain props, so you can supply a `propsReducer` that determines exactly how the curried props are combined with the element props. This can be useful when you want to merge complex props at different levels, like `className` or `style`:
+In some specialised circumstances you may want to customised the currying behaviour for certain props, so you can supply a `propsReducer` that determines exactly how the curried props are combined with the element props.
 
 ```jsx
 import React from 'react';
 import { Button } from '@material-ui/core';
 import { curry } from 'react-curry-component';
 
-function classNameReducer(curriedProps, props) {
-    const { className: curryClassName, ...otherCurriedProps } = curriedProps;
-    const { className, ...otherProps } = props;
+function linkReducer(curriedProps, props) {
+    const { href: curryHref, ...otherCurriedProps } = curriedProps;
+    const { href, ...otherProps } = props;
 
-    const combinedClassName = [ curryClassName, className ].filter(Boolean).join(" ");
+    //only allow overwrite by HTTPS links
+    const combinedHref = href.startsWith("https")) ? href : curryHref;
 
-    // always use the curried variant (hard)
-    // but other props can be overwritten (soft)
+    //do a default soft curry on other props
     return { ...otherCurriedProps, ...otherProps, className: combinedClassName };
 }
 
@@ -112,34 +147,6 @@ const Btn = curry(<Button className="btn" />, "Btn", classNameReducer);
 
 // className will be "big btn"
 const buttonElement = <Btn className="big" />; 
-```
-
-You can also do this for event callbacks, for example if you want to trigger one callback from the curried props and one from the normal props:
-
-```jsx
-import React from 'react';
-import { Button } from '@material-ui/core';
-import { curry } from 'react-curry-component';
-
-function onClickReducer(curriedProps, props) {
-    const { onClick: curryOnClick, ...otherCurriedProps } = curriedProps;
-    const { onClick, ...otherProps } = props;
-
-    const combinedOnClick = (...args) => {
-        curryOnClick(...args);
-        onClick(...args);
-    };
-
-    return { ...otherCurriedProps, ...otherProps, claonClickssName: combinedOnClick };
-}
-
-const handleClick1 => console.log("click 1");
-const handleClick2 => console.log("click 2");
-
-const Btn = curry(<Button onClick={ handleClick1 } />, "Btn", onClickReducer);
-
-// When clicked, this will trigger both click handlers in sequence
-const buttonElement = <Btn onClick={ handleClick2 } />; 
 ```
 
 Bear in mind that your `propsReducer` function will be called on every render of every instance of your curried function, so avoid making it too intensive if you're planning to do lots of frequent updates on a large number of curried elements.

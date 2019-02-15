@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`curry package performs a smart curry(hard) 1`] = `
+<Curried(div)
+  id="some-id"
+  onClick={[MockFunction]}
+  style={
+    Object {
+      "color": "black",
+      "fontWeight": "bold",
+    }
+  }
+>
+  <div
+    className="some-class"
+    id="some-id"
+    onClick={[Function]}
+    style={
+      Object {
+        "color": "white",
+        "fontWeight": "bold",
+      }
+    }
+  />
+</Curried(div)>
+`;
+
+exports[`curry package performs a smart curry(soft) 1`] = `
+<Curried(div)
+  className="some-other-class"
+  onClick={[MockFunction]}
+  style={
+    Object {
+      "color": "black",
+    }
+  }
+>
+  <div
+    className="some-class some-other-class"
+    id="some-id"
+    onClick={[Function]}
+    style={
+      Object {
+        "color": "black",
+        "fontWeight": "bold",
+      }
+    }
+  />
+</Curried(div)>
+`;

@@ -1,3 +1,6 @@
+# 1.0.0 released 15/02/2019
+ * Add Smart Curry
+
 # 0.2.0 released 14/02/2019
  * Allow hard, soft and custom currying
  * Use `react-display-name` library to get displaynames for components

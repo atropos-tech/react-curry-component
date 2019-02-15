@@ -1,6 +1,6 @@
 {
   "name": "react-curry-component",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "A react utility allowing easy creation of specialised components from existing components",
   "main": "lib/index.js",
   "scripts": {

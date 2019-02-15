@@ -1,13 +1,6 @@
 import React from "react";
 import getDisplayName from "react-display-name";
-
-function allowOverwrite(curriedProps, props) {
-    return { ...curriedProps, ...props };
-}
-
-function forceCurry(curriedProps, props) {
-    return { ...props, ...curriedProps };
-}
+import { allowOverwrite, forceCurry, mergeComplexProps } from "./reducers";
 
 export function curry(reactElement, displayName, propsReducer = allowOverwrite) {
     const { props: curriedProps, type: CurriedType } = reactElement;
@@ -25,4 +18,9 @@ export function currySoft(reactElement, displayName) {
 
 export function curryHard(reactElement, displayName) {
     return curry(reactElement, displayName, forceCurry);
+}
+
+export function currySmart(reactElement, displayName, isHard = false) {
+    const propsReducer = (curriedProps, props) => mergeComplexProps(curriedProps, props, isHard);
+    return curry(reactElement, displayName, propsReducer);
 }
